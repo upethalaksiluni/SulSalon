@@ -1,0 +1,234 @@
+ // DOM elements
+        const container = document.getElementById('main-container');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const welcomeLoginBtn = document.getElementById('welcome-login-btn');
+        const welcomeRegisterBtn = document.getElementById('welcome-register-btn');
+        const switchBox = document.getElementById('switch-box');
+        const switchBtn = document.getElementById('switch-toggle');
+        const switchTitle = document.getElementById('switch-title');
+        const switchText = document.getElementById('switch-text');
+
+        // Forms
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        // Forgot password forms
+        const forgotPasswordStep1 = document.getElementById('forgot-password-step1');
+        const forgotPasswordStep2 = document.getElementById('forgot-password-step2');
+        const forgotPasswordStep3 = document.getElementById('forgot-password-step3');
+
+        // Forgot password links and buttons
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const verifyEmailBtn = document.getElementById('verify-email-btn');
+        const resetPasswordBtn = document.getElementById('reset-password-btn');
+        const backToLoginBtn1 = document.getElementById('back-to-login-btn1');
+        const backToLoginBtn2 = document.getElementById('back-to-login-btn2');
+        const backToLoginBtn3 = document.getElementById('back-to-login-btn3');
+
+        // Toggle state
+        let isLoginView = false;
+
+        // Function to hide welcome screen and show login form
+        function showLoginFromWelcome() {
+            welcomeScreen.classList.add('hidden');
+            
+            // Set up for login view
+            switchBox.classList.add('right');
+            switchTitle.textContent = "Hello, Welcome!";
+            switchText.textContent = "Don't have an account? Click below to register.";
+            switchBtn.textContent = "Register";
+            
+            setTimeout(() => {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            }, 300);
+            
+            isLoginView = true;
+        }
+
+        // Function to hide welcome screen and show register form
+        function showRegisterFromWelcome() {
+            welcomeScreen.classList.add('hidden');
+            
+            // Set up for register view
+            switchBox.classList.remove('right');
+            switchTitle.textContent = "Welcome Back!";
+            switchText.textContent = "Already have an account? Click below to log in.";
+            switchBtn.textContent = "Login";
+            
+            setTimeout(() => {
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }, 300);
+            
+            // Adjust container height for register form
+            container.style.height = "700px";
+            
+            isLoginView = false;
+        }
+
+        // Function to show the login form
+        function showLoginForm() {
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+            
+            // Hide forgot password forms
+            forgotPasswordStep1.style.display = 'none';
+            forgotPasswordStep2.style.display = 'none';
+            forgotPasswordStep3.style.display = 'none';
+            
+            // Update toggle button
+            switchBox.classList.add('right');
+            switchTitle.textContent = "Hello, Welcome!";
+            switchText.textContent = "Don't have an account? Click below to register.";
+            switchBtn.textContent = "Register";
+            
+            // Reset container height
+            container.style.height = "500px";
+            
+            isLoginView = true;
+        }
+
+        // Function to show the register form
+        function showRegisterForm() {
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+            
+            // Hide forgot password forms
+            forgotPasswordStep1.style.display = 'none';
+            forgotPasswordStep2.style.display = 'none';
+            forgotPasswordStep3.style.display = 'none';
+            
+            // Update toggle button
+            switchBox.classList.remove('right');
+            switchTitle.textContent = "Welcome Back!";
+            switchText.textContent = "Already have an account? Click below to log in.";
+            switchBtn.textContent = "Login";
+            
+            // Adjust container height for register form
+            container.style.height = "700px";
+            
+            isLoginView = false;
+        }
+
+        // Function to show the forgot password form (step 1)
+        function showForgotPasswordStep1() {
+            loginForm.classList.add('hidden');
+            registerForm.classList.add('hidden');
+            
+            forgotPasswordStep1.style.display = 'flex';
+            forgotPasswordStep2.style.display = 'none';
+            forgotPasswordStep3.style.display = 'none';
+            
+            // Adjust container height if needed
+            container.style.height = "500px";
+        }
+
+        // Function to show the forgot password reset form (step 2)
+        function showForgotPasswordStep2() {
+            forgotPasswordStep1.style.display = 'none';
+            forgotPasswordStep2.style.display = 'flex';
+            forgotPasswordStep3.style.display = 'none';
+        }
+
+        // Function to show the password reset success message (step 3)
+        function showForgotPasswordStep3() {
+            forgotPasswordStep1.style.display = 'none';
+            forgotPasswordStep2.style.display = 'none';
+            forgotPasswordStep3.style.display = 'flex';
+        }
+
+        // Event Listeners for welcome screen buttons
+        welcomeLoginBtn.addEventListener('click', showLoginFromWelcome);
+        welcomeRegisterBtn.addEventListener('click', showRegisterFromWelcome);
+
+        // Toggle between login and register forms
+        switchBtn.addEventListener('click', () => {
+            if (!isLoginView) {
+                showLoginForm();
+            } else {
+                showRegisterForm();
+            }
+        });
+
+        // Show forgot password form when "Forgot Password?" is clicked
+        forgotPasswordLink.addEventListener('click', showForgotPasswordStep1);
+
+        // Back to login buttons from forgot password steps
+        backToLoginBtn1.addEventListener('click', showLoginForm);
+        backToLoginBtn2.addEventListener('click', showLoginForm);
+        backToLoginBtn3.addEventListener('click', showLoginForm);
+
+        // Handle verification (mock functionality)
+        verifyEmailBtn.addEventListener('click', () => {
+            const emailInput = document.getElementById('forgot-email').value;
+            const emailMessage = document.getElementById('email-message');
+            
+            if (emailInput) {
+                emailMessage.className = 'message success';
+                emailMessage.textContent = 'Email verified! Please set your new password.';
+                
+                setTimeout(() => {
+                    showForgotPasswordStep2();
+                }, 1000);
+            } else {
+                emailMessage.className = 'message error';
+                emailMessage.textContent = 'Please enter a valid email.';
+            }
+        });
+
+        // Handle password reset (mock functionality)
+        resetPasswordBtn.addEventListener('click', () => {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const passwordMessage = document.getElementById('password-message');
+            
+            if (!newPassword || !confirmPassword) {
+                passwordMessage.className = 'message error';
+                passwordMessage.textContent = 'Please fill in all fields.';
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                passwordMessage.className = 'message error';
+                passwordMessage.textContent = 'Passwords do not match.';
+                return;
+            }
+            
+            // Basic password validation
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+            if (!passwordRegex.test(newPassword)) {
+                passwordMessage.className = 'message error';
+                passwordMessage.textContent = 'Password does not meet the requirements.';
+                return;
+            }
+            
+            passwordMessage.className = 'message success';
+            passwordMessage.textContent = 'Password updated successfully!';
+            
+            setTimeout(() => {
+                showForgotPasswordStep3();
+            }, 1000);
+        });
+
+        // Handle login button click (mock functionality)
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (username && password) {
+                alert('Login successful!');
+                // Redirect to dashboard or main page
+                // window.location.href = 'dashboard.html';
+            } else {
+                alert('Please enter both username and password.');
+            }
+        });
+
+        // Handle registration form submission
+        document.getElementById('registration-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Registration successful!');
+            // Redirect to login or dashboard
+            showLoginForm();
+        });
