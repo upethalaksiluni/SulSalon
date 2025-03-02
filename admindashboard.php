@@ -1,22 +1,18 @@
 <?php
-// index.php
-// Define the path to the userauthentication.dat file
-$userauthenticationFile = "userauthentication.dat"; // Adjust the path to your .dat file if needed
-$userauthenticationContent = '';
+// Start session
+session_start();
 
-// Check if the file exists and is readable
-if (file_exists($userauthenticationFile) && is_readable($userauthenticationFile)) {
-    // Read the content of the userauthentication.dat file
-    $userauthenticationContent = file_get_contents($userauthenticationFile);
-} else {
-    $userauthenticationContent = 'Error loading header content from userauthentication.dat.';
+// Check if admin is logged in
+if (!isset($_SESSION['admin_id'])) {
+    header('Location: adminlogin.php');
+    exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Sulochana Salon</title>
     <meta name="description" content="">
@@ -55,36 +51,35 @@ if (file_exists($userauthenticationFile) && is_readable($userauthenticationFile)
     <!-- modernizr js -->
     <script src="assets/js/vendor/modernizr-3.5.0.min.js"></script>
     
-        <?php
-        // index.php
-        $cssFile = "userauthenticationcss.dat"; // Adjust the path if necessary
+    <?php
+    // index.php
+    $cssFile = "admindashboardcss.dat"; // Adjust the path if necessary
 
-        if (file_exists($cssFile) && is_readable($cssFile)) {
-            echo "<style>" . file_get_contents($cssFile) . "</style>";
-        } else {
-            echo "<!-- Error: File $cssFile not found or not readable -->";
-        }
-        ?>
-
+    if (file_exists($cssFile) && is_readable($cssFile)) {
+        echo "<style>" . file_get_contents($cssFile) . "</style>";
+    } else {
+        echo "<!-- Error: File $cssFile not found or not readable -->";
+    }
+    ?>
 </head>
 <body>
-
-    <div class="content">
-        <!-- Content loaded from the index.dat file -->
-        <?php echo $userauthenticationContent; ?>
+<div class="admin-container">
+        <div class="header">
+            <div class="welcome-message">
+                Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?>!
+            </div>
+            <a href="admin_process.php?action=logout" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+        
+        <h1>Admin Dashboard</h1>
+        
+        <div class="dashboard-content">
+            <!-- Your dashboard content goes here -->
+            <p>Welcome to the Sulochana Salon admin dashboard. Here you can manage users, appointments, and other salon services.</p>
+        </div>
     </div>
-
-    <?php
-      // Load header JavaScript from headerjs.dat
-      $jsFiles = ["userauthenticationjs.dat"];
-      foreach ($jsFiles as $file) {
-        if (file_exists($file) && is_readable($file)) {
-          echo "<script>" . file_get_contents($file) . "</script>";
-        } else {
-          echo "<!-- Error: File $file not found or not readable -->";
-        }
-      }
-    ?>
 
     <!-- loder -->
     <div class="loader-wrapper">

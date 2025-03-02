@@ -67,3 +67,37 @@ nav {
     transform: translateX(-50%);
 }
 
+/* User dropdown styles */
+.user-dropdown {
+    position: relative;
+}
+
+.user-dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #222;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%;
+    right: -20px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.user-dropdown-menu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.3s;
+}
+
+.user-dropdown-menu a:hover {
+    background-color: #3498db;
+}
+
+.show {
+    display: block;
+}
