@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db = 'user_db';
+$db = 'salon';
 $user = 'root';
 $pass = 'password';
 

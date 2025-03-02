@@ -29,12 +29,8 @@
             <li class="list">
                 <a href="javascript:void(0);" class="user-icon">
                     <span class="icon"><i class="fas fa-user"></i></span>
-                    <span class="text">Account</span>
+                    <span class="text"><a href="userauthentication.php">Account login</span>
                 </a>
-                <ul class="dropdown" id="userDropdown">
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Register</a></li>
-                </ul>
             </li>
         </ul>
     </nav>
